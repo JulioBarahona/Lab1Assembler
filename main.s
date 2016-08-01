@@ -25,7 +25,14 @@ vector: .space 40
 .align 2
 ****/
 
+/**
 
+MOVS   r0,r0,lsl #1
+EORCC  r0,r0,#1<<31-14
+EORMI  r0,r0,#1<<31-14
+
+@ posible forma del lsfr 
+**/
 .global main
 .func main
 
