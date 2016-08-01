@@ -1,10 +1,13 @@
-/* ***************************************************************** 
+	/* ***************************************************************** 
    main random.s
    
    ***************************************************************** */
 
+/**
+@no se si este codigo esta bien comentado   
 .data
 .align 2
+
 datoPromedio:	.word	0 @Almacena el promedio de los dos numeros
 formatop:		.asciz	"El promedio de los numeros es: %d  \n"
 datoIng:		.word	0 @Dato ingresado por el usuario
@@ -20,6 +23,8 @@ semilla: .word 0
 vector: .space 40
 .text
 .align 2
+****/
+
 
 .global main
 .func main

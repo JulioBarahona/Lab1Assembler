@@ -13,15 +13,19 @@
 @Parametros de entrada:
 @r0: numero 1
 @r1: numero 2
+
 @Parametros de salida
 @r0: promedio
+
 .global promedio
+
 promedio:
 	push {lr}
 	add r0,r0,r1
 	lsr r0,#1	@division entre 2
 	pop {pc}
-
+ 
+@Comienzo subrutina lsfr
 lsfr:
 push {lr}
 	
@@ -46,28 +50,28 @@ bne
 
 
 	pop {pc}
-
+@Comienzo subrutina min
 min:
 push {lr}
 	
 	pop {pc}
-
+@Comienzo subrutina max
 max:
 push {lr}
 	
 	pop {pc}
-
+@Comienzo subrutina avg
 avg:
 push {lr}
 	
 	pop {pc}
-
+@Comienzo subrutina norm
 norm:
 push {lr}
 	
 	pop {pc}
 
-
+@Comienzo subrutina printVec
 printVec:
 push {lr}
 	
