@@ -80,7 +80,10 @@ main:
 	mov r1,#4194304
 	bl avg
 
-
+@---------------------------------- ENTRA A SUBRUTINA norm------------------------------------------------
+	ldr r0,=vector
+	mov r1,#4194304
+	bl avg
 	
 	MOV R7, #1				@ Exit Syscall
 	SWI 0

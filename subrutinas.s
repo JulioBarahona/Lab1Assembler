@@ -45,7 +45,7 @@ push {lr}
 	vmov s2,#0
 	
 	ciclominimo:
-	vldr s0,[r0],#1 @va pasando en todas las posiciones del vector
+	vldr s0,[r0],#4 @va pasando en todas las posiciones del vector
 	vcmp.F32 s0,s2  @lo mismo que abajo solo que para registros S
 	vmrs APSR_nzcv, FPSCR @banderas
 	@cmp r2,r1      @compara el valor actual del vector con el temporal, que inicia siendo 0 
@@ -80,7 +80,7 @@ push {lr}
 	vmov s2,#0
 	
 	ciclomax:
-	vldr s0,[r0],#1 @va pasando en todas las posiciones del vector
+	vldr s0,[r0],#4 @va pasando en todas las posiciones del vector
 	vcmp.F32 s0,s2  @lo mismo que abajo solo que para registros S
 	vmrs APSR_nzcv, FPSCR @banderas
 	@cmp r2,r1      @compara el valor actual del vector con el temporal, que inicia siendo 0 
@@ -115,7 +115,7 @@ push {lr}
 	vmov s2,#0
 	
 	ciclosuma:
-	vldr s0,[r0],#1 @va pasando en todas las posiciones del vector
+	vldr s0,[r0],#4 @va pasando en todas las posiciones del vector
 	vadd.F32 s0,s0,s2 
 	add r3,r3,#1   @aumenta el contador
 	cmp r3,r4 @recorre las 2^20 posiciones del vector 
@@ -130,8 +130,46 @@ push {lr}
 
 norm:
 push {lr}
+	@en r0 viene la direccion del vector que se usara para recorrerlo
+	@en r1 se guarda el valor actual del vector
+	@en r2 es la suma temporal
+	@en s2 el suma temporal
+	@en r3 va el contador para ver todas las posiciones del vector
+	@en r4 esta el tamaño del vector, que se pasa de r1
+	@en r5 se guarda tambien la direccion del vector y en s5 se guardan los remporales
+	mov r5,r0
+	mov r2,#0
+	mov r6,r0 
+
+	mov r3,#0
+	mov r4,r1
+	vmov s2,#0
 	
+	@primero se consigue la norma del vector
+	ciclonorma:
+	vldr s0,[r0],#4 @va pasando en todas las posiciones del vector
+	vmul.F32 s0,s0,s0
+	vadd s2,s0,s2
+	add r3,r3,#1   @aumenta el contador
+	cmp r3,r4 @recorre las 2^20 posiciones del vector 
+	blt ciclonorma
+	@ya obtenida la norma, que esta guardada en S2, se le saca raiz cuadrada
+	vsqrt.F32 s3,
+	
+	mov r3,#0
+	@luego se divice cada posicion de el vector dentro de la norma y se guarda en la misma posicion de donde se saco 
+	ciclonormalizacion:
+	vldr s5,[r5],#4 @obtiene en s5 el valor de la posicion de r5 
+	vdiv.F32 s4,s5,s3  @divide el de esa posicion dentro de la norma
+	vstr s4,[r6],#1 @lo guarda en la posicion a la que apunta r6 del vector
+	add r3,r3,#1  @le suma al contador
+	cmp r3,r4 @recorre las 2^20 posiciones del vector 
+	blt ciclonormalizacion	
+	
+	mov r0,r2 
 	pop {pc}
+
+
 
 @Comienzo subrutina printVec
 printVec:
