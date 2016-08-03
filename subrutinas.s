@@ -173,6 +173,24 @@ push {lr}
 
 @Comienzo subrutina printVec
 printVec:
-push {lr}
+	push {lr}
+	@en r0 viene la direccion del vector
+	@en r1 viene el tamaño del vector
+	@r5 contador
+	mov r4,r1
+	mov r5,#0
 	
+	cicloprint:
+	vldr s0,[r0],#1
+	@lo convierte de s a d
+	vcvt.F64.F32 d7,s0
+	ldr r0,=string 
+	vmov r2,r3,d7
+	bl printf
+	add r5,r5,#1  @le suma al contador
+	cmp r5,r4 @recorre las 2^20 posiciones del vector 
+	blt cicloprint
 	pop {pc}
+
+	.data
+string:	.asciz "Floating point value is: %f\n"

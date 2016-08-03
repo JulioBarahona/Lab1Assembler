@@ -84,6 +84,11 @@ main:
 	ldr r0,=vector
 	mov r1,#4194304
 	bl avg
-	
+@----------------------------------Entra A SUBRUTINA printvec------------------------------------------------
+	ldr r0,=vector
+	mov r1,#4194304
+	bl printvec
+
+
 	MOV R7, #1				@ Exit Syscall
 	SWI 0
