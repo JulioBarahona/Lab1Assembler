@@ -2,7 +2,7 @@
    main random.s
    archivo main para el laboratorio
    JORGE AZMITIA 15202
-   JULIO BARAHONA 14 
+   JULIO BARAHONA 141206
    
    ***************************************************************** */
 
@@ -15,23 +15,21 @@ datoIng:		.word	0 @Dato ingresado por el usuario
 formatos:		.asciz	"%d"
 stringIngreso:	.asciz	"Ingrese la semilla para generar los numeros:"
 bienvenida:		.asciz	"Bienvenid@! Este programa calcula numeros pseudo aleatorios tomando una base ingresada por el usuario"
-error:			.asciz	"Error, el dato ingresado es incorrecto. Intente nuevamente."
+error:			.asciz	"Error, el dato ingresado debe ser un numero (decimal). Intente nuevamente."
 semilla: .word 0
+
 @ este va a ser el vector grande vector: space 4194304 
 @este es el de prueba
+
+/**
+Tamano de vector = 40
+**/
 vector: .space 40
+
 .text
 .align 2
 ****/
 
-/**
-
-MOVS   r0,r0,lsl #1
-EORCC  r0,r0,#1<<31-14
-EORMI  r0,r0,#1<<31-14
-
-@ posible forma del lsfr 
-**/
 .global main
 .func main
 

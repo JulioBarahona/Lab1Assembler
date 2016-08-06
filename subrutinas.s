@@ -10,27 +10,45 @@
 .global min
 .global max
 .global avg
- 
-@Comienzo subrutina lsfr
-lsfr:
+.global rndm
+
+/**
+Comienzo subrutina rndm o lsfr
+**/
+
 push {lr}
+	@ Se preparan los registros a ser usados
+	mov r3, r1 
+	mov r4, r2
 	
-@r0 tiene la direccion del vector
-@r1 tiene el tamaño del vector 
-@r2 tiene la semilla 
-
-ciclo:
-
-
-and r4,r2,#1
-lsr r2,r2 #1
-
-bne
-
-	pop {pc}
+	/** 
+	Asignar "apodos" a registro (mejora y facilita su uso )
+	**/
+	@en r0 viene la direccion del vector que se usara para recorrerlo
+	direccionVector .req r0
 	
+	@en r1 se guarda el valor actual del vector
+	numeroMinimo .req r1
+	
+	@en r2 es el minimo temporal
+	.req r2
+
+	@en r3 va el contador para ver todas las posiciones del vector
+	.req r3
+	
+	@en r4 esta el tamaño del vector, que se pasa de r1
+	.req r4
+	
+	
+	
+pop {pc}
+ 
+/**
+Termina subrutina rndm o lsfr
+**/ 
 	
 @Comienzo subrutina min
+
 min:
 push {lr}
 	@en r0 viene la direccion del vector que se usara para recorrerlo
@@ -66,6 +84,7 @@ push {lr}
 	
 	
 @Comienzo subrutina max
+
 max:
 push {lr}
 	@en r0 viene la direccion del vector que se usara para recorrerlo
@@ -100,7 +119,8 @@ push {lr}
 	pop {pc}
 	
 	
-	@Comienzo subrutina avg
+@Comienzo subrutina avg
+	
 avg:
 push {lr}
 	@en r0 viene la direccion del vector que se usara para recorrerlo
@@ -126,6 +146,7 @@ push {lr}
 	vcvt.S32.d64 r2,d9	
 	mov r0,r2 
 	pop {pc}
+	
 @Comienzo subrutina norm
 
 norm:
@@ -172,6 +193,7 @@ push {lr}
 
 
 @Comienzo subrutina printVec
+
 printVec:
 	push {lr}
 	@en r0 viene la direccion del vector
